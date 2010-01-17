@@ -1,16 +1,16 @@
 PFORESTER
 ===============================================================================
 
-This software is a probabilistic clone of RNAforester.
+This software is a probabilistic clone of RNAforester using Pair SCFGs.
 It was primarily conceived to infer RNAforester scoring schemes by making use 
-of the Expectation Maximization algorithm. 
+of the Expectation Maximization algorithm.
 By the way, it can be used as an alternative tool to align two RNA secondary 
 structures under the so called Welformed Forest Alignment model.
 
-The primary reference point for Pforester is the following URL:
+The primary reference point for RNAforester is the following URL:
 	http://bibiserv.TechFak.Uni-Bielefeld.DE/rnaforester/
 
-Further informations on this software can be found at the following URL:
+Further informations on Pforester can be found at the following URL:
 	http://CeBiTec.Uni-Bielefeld.DE/~esiragus/
 
 ===============================================================================
@@ -18,7 +18,9 @@ Further informations on this software can be found at the following URL:
 INSTALLATION
 ============
 
-1. Compile the custom dart library:
+Pforester relies on a slightly modified version of the DART library. 
+
+1. Compile the modified dart library:
 	cd dart
 	make release libs  # or debug
 	cd ..
@@ -35,7 +37,7 @@ INSTALLATION
 ECLIPSE
 ============
 
-Pforester and the customized dart can be imported as standard Eclipse projects.
+Pforester and dart can be imported as standard Eclipse projects.
 
 ===============================================================================
 
@@ -46,16 +48,14 @@ USAGE
 - Training
 
 1. Convert each RNA secondary structure into the FlatForest format:
-	perl/convert.pl -ifile MyDataSet/RNA_1.ct -ofile MyDataSet/RNA_1.ff
-	...
-	perl/convert.pl -ifile MyDataSet/RNA_N.ct -ofile MyDataSet/RNA_N.ff
+	perl/convert.pl -ifile MyDataSet/RNA.ct -ofile MyDataSet/RNA.ff
 
-2. Build a training set consisting of all the (n*(n+1))/2 pairings:
-	perl/trainingset.pl MyTrainingSet.ff MyDataSet/*.ff
+2. Build a training set consisting of a random 0.1% sample of all the pairings:
+	perl/trainingset.pl MyDataSet/ MyTrainingSet.ff 0.001
 
 3. Run Pforester in training mode:
-	Release/Pforester --train --affine --structure -lp ParamSet/default-\
-	affine-structure.set -sp MyParamSet.set -ts MyTrainingSet.ff
+	Release/Pforester --train --affine --structure -ts MyTrainingSet.ff \
+			-lp ParamSet/default-affine-structure.set -sp MyParamSet.set
 
 4. Convert the parameter set into the Pforester scoring scheme:
 	perl/paramset2score.pl --affine --structure -ifile MyParamSet.set
@@ -68,8 +68,8 @@ USAGE
 
 3. Run Pforester in alignment mode:
 
-	Release/Pforester --align --affine --structure \
-	-lp MyParamSet.set -as MyAlignmentSet.ff > MyAlignedSet.ff
+	Release/Pforester --align --affine --structure -as MyAlignmentSet.ff \
+			-lp MyParamSet.set > MyAlignedSet.ff
 
 4. Convert the alignments into the Stockholm format:
 
