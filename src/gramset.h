@@ -3,7 +3,7 @@
 
 #include "pcfg.h"
 
-// RNA Forest grammar set
+// Pforester grammar set
 struct Pforester_gramset {
 	const Alphabet& alphabet;
 

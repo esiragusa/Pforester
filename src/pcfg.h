@@ -108,7 +108,7 @@ struct Pforester_pscores_affine: public Pforester_pscores {
 	void update_params(Pforester_params& params) const;
 };
 
-/** RNA Forest Pair PCFG, using PFunc class to represent transition/emission funcs */
+/** Pforester Pair PCFG, using PFunc class to represent transition/emission funcs */
 class Pforester_PCFG: public Pair_PCFG {
 private:
 	Pforester_pscores& pscores;

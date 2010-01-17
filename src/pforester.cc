@@ -11,7 +11,7 @@ Pforester::~Pforester()
 
 void Pforester::init_opts() {
 	INIT_CONSTRUCTED_OPTS_LIST (opts, -1, "[options] <sequence file(s)>",
-			"RNA Forest probabilistic clone using Pair SCFGs");
+			"RNAforester probabilistic clone using Pair SCFGs");
 
 	opts.print_title("General options");
 	opts.add("t -train", train = false, "train a grammar on pairs of RNA secondary structures");

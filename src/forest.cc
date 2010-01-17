@@ -45,7 +45,7 @@ void Pforester_alignment::produce_rnaforest() {
 
 			np_rnaforest.push_back(*npr);
 
-			CTAG(6,FOREST) << "RNA Forest for alignment " << n_align << ", sequence " << npr->name << ":\n"
+			CTAG(6,FOREST) << "FlatForest for alignment " << n_align << ", sequence " << npr->name << ":\n"
 					<< npr->seq << "\n";
 		} else {
 			CTAG(5,FOREST) << "Warning: found no secondary structure for alignment " << n_align << ", sequence "
