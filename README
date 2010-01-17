@@ -1,0 +1,78 @@
+PFORESTER
+===============================================================================
+
+This software is a probabilistic clone of RNAforester.
+It was primarily conceived to infer RNAforester scoring schemes by making use 
+of the Expectation Maximization algorithm. 
+By the way, it can be used as an alternative tool to align two RNA secondary 
+structures under the so called Welformed Forest Alignment model.
+
+The primary reference point for Pforester is the following URL:
+	http://bibiserv.TechFak.Uni-Bielefeld.DE/rnaforester/
+
+Further informations on this software can be found at the following URL:
+	http://CeBiTec.Uni-Bielefeld.DE/~esiragus/
+
+===============================================================================
+
+INSTALLATION
+============
+
+1. Compile the custom dart library:
+	cd dart
+	make release libs  # or debug
+	cd ..
+	
+2. Compile Pforester:
+	cd Pforester/Release  # or Debug
+	export DART_SRC=../../dart/src/
+	export DART_LIB=../../dart/lib/
+	make
+
+===============================================================================
+
+
+ECLIPSE
+============
+
+Pforester and the customized dart can be imported as standard Eclipse projects.
+
+===============================================================================
+
+
+USAGE
+============
+
+- Training
+
+1. Convert each RNA secondary structure into the FlatForest format:
+	perl/convert.pl -ifile MyDataSet/RNA_1.ct -ofile MyDataSet/RNA_1.ff
+	...
+	perl/convert.pl -ifile MyDataSet/RNA_N.ct -ofile MyDataSet/RNA_N.ff
+
+2. Build a training set consisting of all the (n*(n+1))/2 pairings:
+	perl/trainingset.pl MyTrainingSet.ff MyDataSet/*.ff
+
+3. Run Pforester in training mode:
+	Release/Pforester --train --affine --structure -lp ParamSet/default-\
+	affine-structure.set -sp MyParamSet.set -ts MyTrainingSet.ff
+
+4. Convert the parameter set into the Pforester scoring scheme:
+	perl/paramset2score.pl --affine --structure -ifile MyParamSet.set
+
+- Alignment
+
+1. Convert each RNA secondary structure into the FlatForest format.
+
+2. Build an alignment set consisting of pairs of RNA secondary structures.
+
+3. Run Pforester in alignment mode:
+
+	Release/Pforester --align --affine --structure \
+	-lp MyParamSet.set -as MyAlignmentSet.ff > MyAlignedSet.ff
+
+4. Convert the alignments into the Stockholm format:
+
+	perl/flatforest2stockholm.pl MyAlignedSet.ff MyAlignedSet.stk
+
+===============================================================================
